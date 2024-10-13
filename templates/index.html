@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网格布局示例</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(20, 1fr); /* 20列 */
+            grid-template-rows: repeat(5, 1fr); /* 5行 */
+            height: 100vh; /* 使用100%视口高度 */
+            gap: 5px; /* 添加格子之间的间距 */
+        }
+
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc; /* 添加边框以便更好地查看网格 */
+            font-size: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+            transition: background-color 0.3s; /* 添加过渡效果 */
+        }
+
+        .cell:hover {
+            background-color: rgba(255, 255, 0, 0.5); /* 悬停时更改背景色 */
+        }
+
+        .car-image {
+            width: 80%; /* 根据需要调整图片宽度 */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <!-- 使用循环生成100个格子 -->
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+
+        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片
