@@ -114,6 +114,8 @@ def save_pred(areas,image,save_name):
         cv2.putText(image1, str(areas.loc[i]["space_id"]), (areas.loc[i]["x1"],areas.loc[i]["y1"]), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0,255,255),1)
     save_path = os.path.join(result_path, save_name)
     cv2.imwrite(save_path, image1)
+    # cv2.imshow('predict', image1)
+
 
 def updata_parking_info(areas_pd,parking_id):
     if isinstance(parking_id, list):

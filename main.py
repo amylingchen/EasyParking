@@ -9,12 +9,10 @@ LABEL_PATH = 'data/labels'
 IMAGE_PATH = 'data/images'
 
 
-
-
 def read_image(image_path):
     image_path = Path(image_path)
     images=[]
-    for file_path in image_path.glob('*.jpg'):  # 只读取 .txt 文件
+    for file_path in image_path.glob('*.jpg'):
         file_name = file_path.name
         images.append(file_name)
     return images
@@ -54,24 +52,23 @@ def get_parking_detail(plotId=1):
         parking_details.append({"parkingId":info[1],"plotId":info[2],"occupy":info[3]})
         occupy_count += info[3]
     result={
-        "plot_id":plotId,
-        "plot_name":plot_name,
-        "total_parking":total,
-        "occupied_plot":occupy_count,
-        "empty_plot":total-occupy_count,
-        "parking_details":parking_details
+        "plotid":plotId,
+        "plotname":plot_name,
+        "totalplot":total,
+        "occupiedplot":occupy_count,
+        "emptyplot":total-occupy_count,
+        "parkingdetails":parking_details,
+        "updatatime":str(info[4]),
     }
     print(result)
     return result
 
 
 if __name__ == '__main__':
-
-    img_path = '2012-11-09_09_51_41.jpg'
     tree_path = '2012-11-09_09_51_41.json'
-    # while True:
-    #
-    parking_detect_multi(IMAGE_PATH, tree_path)
-    #     time.sleep(300)
-    get_parking_detail()
+    while True:
+
+        parking_detect_multi(IMAGE_PATH, tree_path)
+        time.sleep(60)
+    # get_parking_detail()
 

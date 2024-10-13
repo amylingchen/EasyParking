@@ -1,106 +1,256 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网格布局示例</title>
+    <title>EasyParking</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* Transparent background */
+        }
+        .headerpart {
+            background-color: #ccdef1;
+            color: #111111;
+            padding: 10px 0;
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            font-family: Calibri;
+            font-weight: 700;
+            font-size: 22px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between; /* Adjust to space between */
+            align-items: center;
+            padding: 10px 20px;
+            width: 60%; /* Keep the width, or adjust it as needed */
+            background-color: transparent;
+            font-family: 'Arial', sans-serif;
+            margin: 0 auto; /* This centers the header */
+        }
+
+        .header-title {
+            font-weight: bold;
+            font-size: 22px; /* Adjusted font size */
+            color: #423baa; /* Color */
+        }
+
+        .parking-info {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .parking-info span {
+            margin-right: 10px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #ff6347; /* Highlight color (tomato) */
+            font-size: 24px; /* Increase size of highlighted text */
+        }
+
+        .custom-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #75b2f6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 20px; /* Add left margin to move button a bit to the left */
+        }
+
+        .info {
+            display: flex; /* Make info a flex container */
+            justify-content: space-between; /* Space between */
+            align-items: center; /* Center vertically */
+            font-family: Arial;
+            font-size: 18px;
+            background-color: rgba(190, 205, 220, 0.8); /* Semi-transparent background */
+            padding: 10px; /* Padding */
+            border-radius: 5px; /* Rounded borders */
+            margin-top: 10px; /* Add some space above */
+            width: 60%; /* Adjust width as needed */
+            margin: 10px auto; /* Center the info block */
+        }
+
+        .info-left {
+            flex: 1; /* Allow the left side to take up available space */
+        }
+
+        .info-right {
+            display: flex;
+            align-items: center; /* Center items vertically */
+        }
+
+        .container {
+            display: flex;
+            margin: 0 auto;
+            justify-content: center;
+            align-items: center;
+            height: 80%;
+            width: 80%;
+            text-align: center;
+            font-family: Arial;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(20, 1fr); /* 20列 */
-            grid-template-rows: repeat(5, 1fr); /* 5行 */
-            height: 100vh; /* 使用100%视口高度 */
-            gap: 5px; /* 添加格子之间的间距 */
+            grid-template-columns: repeat(20, 1fr); /* 20 columns */
+            grid-template-rows: repeat(5, 1fr); /* 5 rows */
+            height: 70vh; /* Use 100% of viewport height */
+            gap: 7.5px; /* Add space between the grid cells */
         }
 
         .cell {
+            position: relative; /* Allows child elements to be absolutely positioned */
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid #ccc; /* 添加边框以便更好地查看网格 */
-            font-size: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
-            transition: background-color 0.3s; /* 添加过渡效果 */
-        }
-
-        .cell:hover {
-            background-color: rgba(255, 255, 0, 0.5); /* 悬停时更改背景色 */
+            border: 0px solid #fffdfd; /* Border to better see the grid */
+            margin-bottom: 12px;
+            background-color: rgba(173, 216, 230, 0.5); /* Light blue background */
         }
 
         .car-image {
-            width: 80%; /* 根据需要调整图片宽度 */
+            width: 80%; /* Adjust image width as needed */
             height: auto;
+        }
+
+        .occupied {
+            filter: grayscale(100%); /* Grayscale for occupied spots */
         }
     </style>
 </head>
 <body>
-    <div class="grid-container">
-        <!-- 使用循环生成100个格子 -->
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
 
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+    <div class="headerpart">EasyParking</div>
+    <div class="header">
+        <div class="header-title" id="parking-name"></div>
+        <div class="parking-info">
+            <span>Available: <span class="highlight" id="rest-plot"></span></span>
+            <span>Total: <span class="highlight" id="total-plot"></span></span>
+        </div>
+    </div>
 
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片" class="car-image"></div>
+    <div class="info">
+        <div class="info-left">
+            Location: Arlington, Texas<br>
+            Time: <span id="current-time"></span><br>
+            Weather: <span id="weather-info">Sunny, 25°C</span>
+        </div>
+        <div class="info-right">
+            Last Updated: <span id="update-time"></span>
+            <button class="custom-button" onclick="showParkingAreaDetails()" type="button" id="refresh">Refresh</button>
+        </div>
+    </div>
 
-        <div class="cell"><img src="path/to/car.jpg" alt="汽车图片
+    <div class="container">
+        <div class="grid-container" id="grid-container">
+            <!-- Grid cells generated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        function generateGrid(occupiedSpaces) {
+            const gridContainer = document.getElementById('grid-container');
+
+            for (let i = 1; i <= 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+
+                // Check if the spot is occupied
+                if (occupiedSpaces.includes(i)) {
+                    const img = document.createElement('img');
+                    img.src = 'static/image/car.jpg';
+                    img.alt = 'Car image'; // Car image
+                    img.className = 'car-image occupied'; // Add grayscale class
+
+                    cell.appendChild(img);
+                }
+
+                gridContainer.appendChild(cell);
+            }
+        }
+
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', options);
+        }
+
+        // Generate grid and update time when the page loads
+        window.onload = function() {
+            showParkingAreaDetails();
+            updateTime();
+            setInterval(updateTime, 1000); // Update time every second
+        };
+
+        function showParkingAreaDetails() {
+            customAjax('api/searchparkingdetail', null, showresult, showerror);
+        }
+
+        function showresult(data) {
+            removeresult();
+            let total = document.getElementById('total-plot');
+            let rest = document.getElementById('rest-plot');
+            let name = document.getElementById('parking-name');
+            let updateTime = document.getElementById('update-time'); // Get the update time element
+
+            total.textContent = data.data.totalplot;
+            name.textContent = data.data.plotname;
+            rest.textContent = data.data.emptyplot;
+            updateTime.textContent = data.data.updatatime; // Set the last updated time
+
+            let occupiedParkingIdstr = data.data.parkingdetails
+                .filter(parking => parking.occupy === 1) // Filter out occupied spots
+                .map(parking => parking.parkingId); // Get IDs of occupied spots
+
+            console.log(occupiedParkingIdstr);
+            let occupiedSpacesId = occupiedParkingIdstr.map(Number);
+            console.log(occupiedSpacesId);
+            generateGrid(occupiedSpacesId);
+        }
+
+        function removeresult() {
+            const gridContainer = document.getElementById('grid-container');
+            gridContainer.innerHTML = '';
+        }
+
+        function showerror(error) {
+            removeresult();
+            const container = document.getElementById('container');
+            const errordiv = document.createElement('div');
+
+            errordiv.textContent = "Error: " + error;
+            errordiv.className = 'error';
+            container.append(errordiv);
+        }
+
+        function customAjax(url, params, successCallback, errorCallback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true); // GET request method
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const response = JSON.parse(xhr.responseText);
+                    successCallback(response); // Call success callback
+                } else {
+                    errorCallback(xhr.statusText); // Call error callback
+                }
+            };
+            xhr.onerror = function() {
+                errorCallback(xhr.statusText);
+            };
+            xhr.send(); // GET request does not need body, just call send()
+        }
+    </script>
+</body>
+</html>

@@ -11,16 +11,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
-@app.route('/functions.js')
-def functions():
-    return render_template('functions.js')
-
-@app.route('/style.css')
-def style():
-    return render_template('style.css')
-
-
 @app.route('/api/searchparkingdetail', methods=['get'])
 def search_parking_detail():
 
