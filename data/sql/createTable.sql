@@ -7,6 +7,15 @@ CREATE TABLE parkingLot (
     updatetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  -- 更新时间，每次更新时自动刷新
 );
 
+
+
+INSERT INTO parkingLot (name, latitude, longitude)
+VALUES ('Central Parking', 37.774929, -122.419418);
+
+
+drop TABLE parking_occupancy;
+drop TABLE ParkingInfo;
+
 CREATE TABLE ParkingInfo (
     id INT AUTO_INCREMENT PRIMARY KEY,       -- 自增主键，必填
     parkingId VARCHAR(50),                   -- 停车位ID，可重复
@@ -15,6 +24,11 @@ CREATE TABLE ParkingInfo (
     createtime DATETIME DEFAULT CURRENT_TIMESTAMP,  -- 创建时间，默认当前时间
     updatetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  -- 更新时间，随每次更新而更新
 );
+CREATE TABLE parking_occupancy (
+    id INT AUTO_INCREMENT PRIMARY KEY,       -- 自增主键
+    plotId INT NOT NULL,                      -- 每个停车位的ID，必填
+    num_available INT DEFAULT 0,              -- 占用数量，默认为0
+    createtime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 创建时间，默认为当前时间
+    updatatime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 更新时间，每次更新时自动刷新
+);
 
-INSERT INTO parkingLot (name, latitude, longitude)
-VALUES ('Central Parking', 37.774929, -122.419418);

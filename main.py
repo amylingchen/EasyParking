@@ -63,7 +63,46 @@ def get_parking_detail(plotId=1):
     print(result)
     return result
 
+def parking_detect_vedio(video_path,label_path):
+    cap = cv2.VideoCapture(video_path)
+    tree = os.path.join(LABEL_PATH, label_path)
+    park_space = get_areas(tree)
+    if not cap.isOpened():
+        print(f"无法打开视频文件: {video_path}")
+        return
+    while True:
+        # 从视频中读取帧
+        ret, frame = cap.read()
+        if not ret:
+            ret
+        px = predict(image)
+        # pred_park = check_ocupied(park_space, px)
 
+        show_pred(park_space,frame,px)
+
+        if cv2.waitKey(10) & 0xFF == 27:
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+    
+def show_pred(areas,image,save_name):
+    image1 = image.copy()
+    # image1 = cv2.resize(image1, (1920, 1200))
+    for i in range(len(areas)):
+        area_space = [(areas.loc[i]["x1"],areas.loc[i]["y1"]),
+                      (areas.loc[i]["x2"],areas.loc[i]["y2"]),
+                      (areas.loc[i]["x3"],areas.loc[i]["y3"]),
+                      (areas.loc[i]["x4"],areas.loc[i]["y4"])]
+        if areas.loc[i]["occupy"]==0:
+            color = (0, 255, 0)
+        else:
+            color = (0, 0, 255)
+
+        cv2.polylines(image1, [np.array(area_space, np.int32)], True, color, 2)
+        cv2.putText(image1, str(areas.loc[i]["space_id"]), (areas.loc[i]["x1"],areas.loc[i]["y1"]), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0,255,255),1)
+    # save_path = os.path.join(result_path, save_name)
+    # cv2.imwrite(save_path, image1)
+    cv2.imshow('predict', image1)
 if __name__ == '__main__':
     tree_path = '2012-11-09_09_51_41.json'
     while True:

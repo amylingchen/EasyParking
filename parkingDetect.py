@@ -136,7 +136,15 @@ def updata_parking_info(areas_pd,parking_id):
                 """
     res = execute_many_query(insert_query, insert_data)
     print(f"{res} rows inserted into parkinginfo.")
+    insert_querry = """
+                    INSERT INTO parking_occupancy (plotId, num_available)
+                    VALUES (%s, %s);
+                """
+    total_available = int((parking_pd['occupy']==0).sum())
 
+    insert_data =(parking_id,total_available)
+    res=execute_one_query(insert_querry, insert_data)
+    print(f"{res} rows inserted into parking_occupancy.")
     # parking_pd =areas_pd[["space_id","occupy"]]
     # parking_pd.loc[:,'parking_ids'] = parking_id
     # new_parking_pd_oder = ["occupy",'parking_ids','space_id']

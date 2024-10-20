@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyParking</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* Transparent background */
+            background-color: rgba(255, 255, 255, 0.9);
         }
+
         .headerpart {
             background-color: #ccdef1;
             color: #111111;
@@ -22,21 +25,22 @@
             font-weight: 700;
             font-size: 22px;
         }
+
         .header {
             display: flex;
-            justify-content: space-between; /* Adjust to space between */
+            justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            width: 60%; /* Keep the width, or adjust it as needed */
+            width: 60%;
             background-color: transparent;
             font-family: 'Arial', sans-serif;
-            margin: 0 auto; /* This centers the header */
+            margin: 0 auto;
         }
 
         .header-title {
             font-weight: bold;
-            font-size: 22px; /* Adjusted font size */
-            color: #423baa; /* Color */
+            font-size: 22px;
+            color: #423baa;
         }
 
         .parking-info {
@@ -51,8 +55,8 @@
 
         .highlight {
             font-weight: bold;
-            color: #ff6347; /* Highlight color (tomato) */
-            font-size: 24px; /* Increase size of highlighted text */
+            color: #ff6347;
+            font-size: 24px;
         }
 
         .custom-button {
@@ -64,68 +68,101 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-left: 20px; /* Add left margin to move button a bit to the left */
+            margin-left: 20px;
+        }
+
+        .content-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 10px;
         }
 
         .info {
-            display: flex; /* Make info a flex container */
-            justify-content: space-between; /* Space between */
-            align-items: center; /* Center vertically */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
             font-family: Arial;
             font-size: 18px;
-            background-color: rgba(190, 205, 220, 0.8); /* Semi-transparent background */
-            padding: 10px; /* Padding */
-            border-radius: 5px; /* Rounded borders */
-            margin-top: 10px; /* Add some space above */
-            width: 60%; /* Adjust width as needed */
-            margin: 10px auto; /* Center the info block */
+            background-color: rgba(190, 205, 220, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            width: 25%; /*占30%*/
         }
 
         .info-left {
-            flex: 1; /* Allow the left side to take up available space */
+            flex: 1;
         }
 
-        .info-right {
-            display: flex;
-            align-items: center; /* Center items vertically */
+        .chart-container {
+            width: 70%; /*占70%*/
         }
 
-        .container {
+        /* Main container split into left and right */
+        .main-content {
             display: flex;
+            justify-content: space-between;
+            height: 60%;
+            width: 80%;
             margin: 0 auto;
+        }
+
+        /* Left section */
+        .left-section {
+            width: 50%;
+            height: 100%;
+            padding-right: 20px;
+            display: flex;
             justify-content: center;
             align-items: center;
-            height: 80%;
-            width: 80%;
-            text-align: center;
-            font-family: Arial;
+        }
+
+        /* Right section */
+        .right-section {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .right-section img {
+            width: 100%;
+            height: auto;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
         }
 
         .grid-container {
+            margin-top: 20px;
             display: grid;
-            grid-template-columns: repeat(20, 1fr); /* 20 columns */
-            grid-template-rows: repeat(5, 1fr); /* 5 rows */
-            height: 70vh; /* Use 100% of viewport height */
-            gap: 7.5px; /* Add space between the grid cells */
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            height: 50vh;
+            gap: 7.5px;
         }
 
         .cell {
-            position: relative; /* Allows child elements to be absolutely positioned */
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 0px solid #fffdfd; /* Border to better see the grid */
+            border: 0px solid #fffdfd;
             margin-bottom: 12px;
-            background-color: rgba(173, 216, 230, 0.5); /* Light blue background */
+            background-color: rgba(173, 216, 230, 0.5);
         }
 
         .car-image {
-            width: 80%; /* Adjust image width as needed */
+            width: 80%;
             height: auto;
         }
 
         .occupied {
-            filter: grayscale(100%); /* Grayscale for occupied spots */
+            filter: grayscale(100%);
         }
     </style>
 </head>
@@ -140,25 +177,139 @@
         </div>
     </div>
 
-    <div class="info">
-        <div class="info-left">
-            Location: Arlington, Texas<br>
-            Time: <span id="current-time"></span><br>
-            Weather: <span id="weather-info">Sunny, 25°C</span>
+    <!-- Content row with info on the left and chart on the right -->
+    <div class="content-row">
+        <div class="info">
+            <div class="info-left">
+                Location: Arlington, Texas<br>
+                Time: <span id="current-time"></span><br>
+                Weather: <span id="weather-info">Sunny, 25°C</span><br>
+                Last Updated: <span id="update-time"></span><br>
+            </div>
         </div>
-        <div class="info-right">
-            Last Updated: <span id="update-time"></span>
-            <button class="custom-button" onclick="showParkingAreaDetails()" type="button" id="refresh">Refresh</button>
+
+        <div class="chart-container">
+            <canvas id="parking-chart" width="400" height="100"></canvas>
         </div>
     </div>
 
-    <div class="container">
-        <div class="grid-container" id="grid-container">
-            <!-- Grid cells generated by JavaScript -->
+    <!-- Main content section split into two parts -->
+    <div class="main-content">
+        <div class="left-section">
+            <div class="grid-container" id="grid-container">
+                <!-- Grid cells generated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="right-section">
+            <img id="parking-image" src="static/image/output.jpg" alt="Parking Lot">
         </div>
     </div>
 
     <script>
+        let availableSpaces = [];
+        let timestamps = [];
+
+        // Initialize the chart
+        const ctx = document.getElementById('parking-chart').getContext('2d');
+        const parkingChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timestamps, // 使用日期字符串作为 x 轴标签
+                datasets: [{
+                    label: 'Available Parking Spaces',
+                    data: availableSpaces, // 数据为可用停车位数
+                    borderColor: '#75b2f6',
+                    backgroundColor: 'rgba(117, 178, 246, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }],
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time', // 将 x 轴设置为时间格式
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        },
+                        time: {
+                            unit: 'minute', // 可以根据需要选择单位
+                            tooltipFormat: 'll HH:mm', // 设置 tooltip 的时间格式
+                            displayFormats: {
+                                minute: 'HH:mm' // 可以根据需要自定义显示格式
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Available Spaces'
+                        },
+                        beginAtZero: true,
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    // title: {
+                    //     display: true,
+                    //     text: 'Parking Availability Over Time'
+                    // }
+                }
+            }
+        });
+
+
+        function showChartData() {
+                    // 使用 AJAX 请求从 API 获取数据
+            customAjax('api/searchParkingCountHistory', null, updateChartData, showerror);
+        }
+
+       function updateChartData(data) {
+        // 检查响应代码
+            if (data.code !== 200) {
+                console.error('Error fetching data:', data.msg);
+                return; // 返回以防止继续处理无效数据
+            }
+
+            // 清空当前时间戳和可用停车位数
+            timestamps = [];
+            availableSpaces = [];
+
+            // 遍历接口返回的数据
+            data.data.data.forEach(entry => {
+                const available = parseInt(entry.availablenum, 10); // 确保将可用停车位数转换为整数
+                const timestamp = new Date(entry.createtime); // 将时间戳转换为可读格式
+
+                // 输出调试信息
+                // console.log(`Timestamp: ${timestamp}, Available: ${available}`);
+                // Add 5 hours (5 * 60 * 60 * 1000 milliseconds)
+                timestamp.setHours(timestamp.getHours() + 5); // Adjust the timestamp by adding 5 hours
+                // 更新时间戳和可用停车位数数组
+                timestamps.push(timestamp); // 使用可读时间作为 X 轴标签
+                availableSpaces.push(available); // 将可用停车位数推入 Y 轴数据
+            });
+
+            // 更新图表数据
+            parkingChart.data.labels = timestamps; // 更新 x 轴标签
+            parkingChart.data.datasets[0].data = availableSpaces; // 更新 y 轴数据
+
+            // 刷新图表
+            parkingChart.update();
+            console.log("Timestamps Length:", timestamps.length);
+            console.log("Available Spaces Length:", availableSpaces.length);
+        }
+
+
+
+
+        // Start simulating data
+         // Simulate data every 5 seconds
+
         function generateGrid(occupiedSpaces) {
             const gridContainer = document.getElementById('grid-container');
 
@@ -181,17 +332,26 @@
         }
 
         // Update current time
+        // Update current time to Central Time
         function updateTime() {
             const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', options);
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: 'America/Chicago' // Set to Central Time Zone
+            };
+            document.getElementById('current-time').textContent = now.toLocaleString('en-US', options);
         }
 
         // Generate grid and update time when the page loads
         window.onload = function() {
-            showParkingAreaDetails();
-            updateTime();
+            showParkingAreaDetails(); // Initial load
+            // updateTime();
+            setInterval(showParkingAreaDetails, 2000); // Call every 2 seconds to refresh parking details
             setInterval(updateTime, 1000); // Update time every second
+            setInterval(showChartData, 2000);
         };
 
         function showParkingAreaDetails() {
@@ -210,14 +370,23 @@
             rest.textContent = data.data.emptyplot;
             updateTime.textContent = data.data.updatatime; // Set the last updated time
 
+            // Refresh the parking image with a new one each time (append timestamp to avoid caching)
+            const parkingImage = document.getElementById('parking-image');
+            parkingImage.src = 'static/image/output.jpg?' + new Date().getTime(); // Force reload of image
+
             let occupiedParkingIdstr = data.data.parkingdetails
                 .filter(parking => parking.occupy === 1) // Filter out occupied spots
                 .map(parking => parking.parkingId); // Get IDs of occupied spots
-
-            console.log(occupiedParkingIdstr);
             let occupiedSpacesId = occupiedParkingIdstr.map(Number);
-            console.log(occupiedSpacesId);
-            generateGrid(occupiedSpacesId);
+            // 检查 occupiedSpacesId 是否为空
+            if (occupiedSpacesId.length === 0) {
+                // 如果没有占用的停车位，显示提示消息或生成空的停车位
+                console.log('No occupied parking spaces.');
+                // 你可以选择显示一条信息，或者生成空的网格
+                generateGrid([]); // 或者你可以传递空数组，表示所有车位都是空的
+            } else {
+                generateGrid(occupiedSpacesId); // 生成停车位的网格
+            }
         }
 
         function removeresult() {
