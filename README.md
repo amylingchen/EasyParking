@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-![<video controls src="static/video/easyparking.mp4" title="Title"></video>](static/video/ox1jn-q78zo.gif)
-=======
-<video controls src="static/video/easyparking.mp4" title="Title"></video>
-https://youtu.be/3VdmM833ZeI
->>>>>>> 1c7aba6b5a1510cbd486d079e28b889e2271e988
+![alt text](static/video/ox1jn-q78zo.gif)
 # EasyParking
 This project monitors the number and location of empty parking spaces by reading the image data from the parking lot cameras to determine if there is a vehicle parked in each space, thus helping students find the right space faster.
 
